@@ -1,0 +1,16 @@
+---
+- hosts: all
+  tasks:
+   - name: "shut down Debian flavored systems"
+     command: /sbin/shutdown -t now
+     when: ansible_os_family == "Debian"
+   - name: "shut down CentOS 6 and Debian 7 systems"
+     command: /sbin/shutdown -t now
+     when: 
+      - ansible_distribution == "CentOS"
+      - ansible_distribution_major_version == "6"
+      
+  tasks:
+    - command: echo {{ item }}
+      with_items: [ 0, 2, 4, 6, 8, 10 ]
+      when: item > 5

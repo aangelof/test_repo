@@ -1,0 +1,15 @@
+---
+- hosts: icinga2-master
+  become: true
+  ignore_errors: yes
+  roles:
+   - ace.master-init
+  vars:
+     database_name: icinga2
+     database_user: icinga2
+     database_password: icinga2
+     mysql_root: asdQWE123
+     hostname: icinga2.test
+
+
+  

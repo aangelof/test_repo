@@ -1,0 +1,17 @@
+---
+- hosts: icinga2-monitored
+  become: true
+  ignore_errors: yes
+  roles:
+   - ace.icinga2
+   #- ace.mariadb
+   #- ace.icingaweb2
+  vars:
+     database_name: icinga2
+     database_user: icinga2
+     database_password: icinga2
+     mysql_root:1
+     hostname: satelite.test
+
+
+  

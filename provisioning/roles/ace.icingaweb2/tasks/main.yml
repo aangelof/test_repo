@@ -1,0 +1,27 @@
+---
+# tasks file for ace.icingaweb2
+
+- name: Install Icignaweb2
+  yum: name={{item}} state=installed
+  with_items:
+    - icingaweb2 
+    - httpd
+  
+
+- name: start icingaweb2 and rh-php5
+  service: name={{item}} state=started enabled=yes
+  with_items:
+    - rh-php71-php-fpm
+    - httpd
+  
+
+- name: Set date.timezone for CLI
+  lineinfile:
+   dest: /etc/opt/rh/rh-php71/php.ini
+   regexp: "date.timezone ="
+   line: "date.timezone = UTC"
+
+- name: restart rh-php71-php-fpm
+  service: name={{item}} state=restarted 
+  with_items: 
+   - rh-php71-php-fpm

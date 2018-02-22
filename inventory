@@ -1,0 +1,4 @@
+[icinga2-master]
+192.168.33.17 ansible_user=vagrant ansible_hostname=icinga2_master ansible_private_key_file=/Users/angelangelov/Documents/ansible-book/ansible-master/.vagrant/machines/default/virtualbox/private_key 
+[icinga2-monitored]
+192.168.33.18 ansible_user=vagrant ansible_hostname=icinga2-monitored ansible_private_key_file=/Users/angelangelov/Documents/ansible-book/ansible-monitored/.vagrant/machines/default/virtualbox/private_key 

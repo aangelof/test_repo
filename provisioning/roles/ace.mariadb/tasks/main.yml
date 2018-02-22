@@ -1,0 +1,63 @@
+---
+# tasks file for ace.mariadb
+- name: Install Maria DB
+  yum: name={{item}} state=present
+  with_items:
+    - mariadb-server
+    - python-pip
+    - MySQL-python
+
+- name: start mariadb on boot
+  service: name=mariadb state=started enabled=yes
+  tags: mariadb
+
+- name: delete anonymous MySQL server user for 
+  mysql_user: login_user=root
+   login_password='{{ mysql_root }}'
+   check_implicit_admin=yes
+   user=""
+   host="localhost"
+   state="absent"
+
+- name: Change root user password on first run
+  mysql_user: login_user=root
+   login_password="{{ mysql_root }}"
+   check_implicit_admin=yes
+   name=root
+   password={{ mysql_root }}
+   priv=*.*:ALL,GRANT
+   host="localhost"
+
+- name: Create Icinga2 MySQL database
+  mysql_db: 
+   login_user="root" 
+   login_password="{{ mysql_root }}"  
+   name="{{database_name}}"
+   state=present
+
+- name: Create Icinga2 user 
+  mysql_user: 
+   login_user="root"
+   login_password="{{ mysql_root }}"
+   name="{{database_user}}" 
+   host=localhost password="{{database_password}}" 
+   priv='*.*:ALL'
+   state=present
+ 
+
+- name: Import SQL required DB
+  mysql_db:
+    login_user: "root" 
+    login_password: "{{ mysql_root }}"
+    state: import
+    name: "{{database_name}}"
+    target: /usr/share/icinga2-ido-mysql/schema/mysql.sql  
+
+    
+- name: template configuration file
+  template: src=templates/ido-mysql.j2 dest=/etc/icinga2/features-enabled/ido-mysql.conf mode=0644
+  notify:
+     - restart icinga2
+
+- name: restart icinga2   
+  service: name=icinga2 state=reloaded
