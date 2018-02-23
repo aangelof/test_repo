@@ -1,5 +1,5 @@
 ---
-- hosts: icinga2-monitored
+- hosts: icinga2-master
   become: true
   ignore_errors: yes
   roles:
@@ -10,7 +10,7 @@
      database_name: icinga2
      database_user: icinga2
      database_password: icinga2
-     mysql_root:1
+     mysql_root: icinga2
      hostname: satelite.test
 
 
