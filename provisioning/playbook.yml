@@ -1,17 +1,17 @@
 ---
-- hosts: icinga2-master
+- hosts: icinga2-master-second
   become: true
   ignore_errors: yes
   roles:
    - ace.icinga2
-   #- ace.mariadb
+   - ace.mariadb
    #- ace.icingaweb2
   vars:
      database_name: icinga2
      database_user: icinga2
      database_password: icinga2
      mysql_root: icinga2
-     hostname: satelite.test
+     hostname: mastersecond
 
 
   

@@ -15,7 +15,7 @@
     - icingacli
     - nagios-plugins-all 
 
-- name: "Set hostname like wanted"
+- name: "Set hostname like wanted Bitch"
   hostname: name="{{hostname}}"
     
 - name: start icinga2 on boot
